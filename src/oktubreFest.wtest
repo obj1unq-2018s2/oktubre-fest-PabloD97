@@ -1,0 +1,97 @@
+import oktubreFest.*
+
+describe "oktubre fest atr"{
+	
+	
+	
+	var quilmes= new CervezaRubia(
+		gramosDeLupulo=0.4,
+		seFabricoEn= "argentina",
+		graduacion=0.08
+	)
+	
+	var jarra00= new Jarras(
+		capacidadEnLitros=0.5,
+		marca= quilmes
+	)
+	
+	var jarra01= new Jarras(
+		capacidadEnLitros=1,
+		marca= quilmes
+	)
+	
+	var jarra02= new Jarras(
+		capacidadEnLitros=1.05,
+		marca= quilmes
+	)
+	
+	var juan = new Persona(
+		peso=80,
+		aguante=10,
+		cervezasCompradas=#{jarra02},
+		gustaMusicaTradicional= false
+	)
+	
+	var julian= new Persona(
+		peso=55,
+		aguante=4,
+		cervezasCompradas=#{jarra00,jarra01},
+		gustaMusicaTradicional= true
+	)
+	
+	var german= new Aleman(
+		peso=75,
+		aguante=10,
+		cervezasCompradas=#{jarra00,jarra01}
+		
+	)
+	
+	var carpa00= new Carpa(
+		limiteDeGente= 50,
+		marcaQueSirve= quilmes
+		
+	)
+	
+	fixture{
+		graduacionReglamentaria.graduacion(0.08)
+	}
+	//1
+	test "contenido de alcohol de la jarra"{
+		assert.equals( 0.04, jarra00.cantidadDeAlcohol() )
+	}
+	//2
+	test " cuanto alcohol ingirio german"{
+		assert.equals( 0.12, german.alcoholIngerido() )
+	}
+	//3
+	test " german not esta ebrio"{
+		assert.that(not german.estaEbria() )
+	}
+	//4
+	test " german quiere entrar a la carpa"{
+		assert.that(german.quieroEntrarALa(carpa00)  )
+	}
+	//5
+	test " carpa deja ingresar a la persona"{
+		assert.that( carpa00.puedeEntrar(german) )
+	}
+	//6
+	test "german puede entrar a la carpa"{
+		assert.that( german.puedoEntrarALa(carpa00) )
+	}
+	//7
+	test "persona entra a la carpa"{
+		carpa00.personaIngresa(german)
+		assert.equals( #{german}, carpa00.cantidadDeGente() )
+	}
+	test " borracho intenta entrar a la carpa"{
+		carpa00.personaIngresa(julian)
+		
+	}
+	//8
+	test " borrachos empedermidos en la carpa "{
+		carpa00.personaIngresa(german)
+		carpa00.personaIngresa(juan)
+		assert.equals( 1, carpa00.cantidadDeEbriosEmpedernidos() )
+	}
+}
