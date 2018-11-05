@@ -4,25 +4,25 @@ describe "oktubre fest atr"{
 	
 	
 	
-	var quilmes= new CervezaRubia(
+	var corona= new CervezaRubia(
 		gramosDeLupulo=0.4,
-		seFabricoEn= "argentina",
+		seFabricoEn= "alemania",
 		graduacion=0.08
 	)
 	
 	var jarra00= new Jarras(
 		capacidadEnLitros=0.5,
-		marca= quilmes
+		marca= corona
 	)
 	
 	var jarra01= new Jarras(
 		capacidadEnLitros=1,
-		marca= quilmes
+		marca= corona
 	)
 	
 	var jarra02= new Jarras(
 		capacidadEnLitros=1.05,
-		marca= quilmes
+		marca= corona
 	)
 	
 	var juan = new Persona(
@@ -48,7 +48,7 @@ describe "oktubre fest atr"{
 	
 	var carpa00= new Carpa(
 		limiteDeGente= 50,
-		marcaQueSirve= quilmes
+		marcaQueSirve= corona
 		
 	)
 	
@@ -84,9 +84,8 @@ describe "oktubre fest atr"{
 		carpa00.personaIngresa(german)
 		assert.equals( #{german}, carpa00.cantidadDeGente() )
 	}
-	test " borracho intenta entrar a la carpa"{
-		carpa00.personaIngresa(julian)
-		
+	test " persona no puede entrar a la carpa"{
+		assert.throwsException( carpa00.personaIngresa(julian) )
 	}
 	//8
 	test " borrachos empedermidos en la carpa "{
@@ -94,4 +93,10 @@ describe "oktubre fest atr"{
 		carpa00.personaIngresa(juan)
 		assert.equals( 1, carpa00.cantidadDeEbriosEmpedernidos() )
 	}
+	
+	//9
+	test "german es patriota"{
+		assert.that( german.esPatriota() )
+	}
+	
 }

@@ -2,11 +2,11 @@
 
 class Carpa {
 	
-	var  limiteDeGente
+	const  limiteDeGente
 	//var property cervezaALaVenta
 	var property cantidadDeGente=#{}
 	var property marcaQueSirve
-	var property hayMusicos= false
+	const property hayMusicos= false
 	
 	
 	//method marcaDeCervezaQueVende()= marcaQueSirve
@@ -30,7 +30,7 @@ class Carpa {
 			return true
 		}
 		else{
-			self.error("Toca de aca ")
+			self.error("No podes entrar ")
 		}
 	}
 	
@@ -81,12 +81,18 @@ class Persona{
 }
 
 class Aleman inherits Persona{
-	method nacionalidad()= "aleman"
+	method nacionalidad()= "alemania"
 	
 	override method gustaUna(marca)= true
 	
 	override method quieroEntrarALa(carpa){
 		return super(carpa) and carpa.hayCantidadPar()
+	}
+	
+	method esPatriota(){
+		return self.cervezasCompradas().all({
+			jarra=> jarra.hechaEn() == self.nacionalidad()
+		})
 	}
 	
 }
@@ -96,12 +102,23 @@ class Belgas inherits Persona{
 	
 	override method gustaUna(marca)= marca.gramosDeLupulo() > 4
 	
+	method esPatriota(){
+		return self.cervezasCompradas().all({
+			jarra=> jarra.hechaEn() == self.nacionalidad()
+		})
+	}
 }
 
 class Checos inherits Persona{
 	method nacionalidad()= "republicaCheca"
 	
 	override method gustaUna(marca)= marca.graduacion() > 0.08
+
+	method esPatriota(){
+		return self.cervezasCompradas().all({
+			jarra=> jarra.hechaEn() == self.nacionalidad()
+		})
+	}
 	
 }
 
